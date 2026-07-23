@@ -111,13 +111,11 @@
       border: 1px solid #cbd5e1;
       border-radius: 6px;
       font-size: 13px;
-      line-height: 1.35;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s;
     }
     .form-control:focus {
       outline: none;
       border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
     }
     
     table {
@@ -150,14 +148,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-    .btn:active { transform: scale(0.98); }
-    .btn:focus-visible {
-      outline: 3px solid rgba(37, 99, 235, 0.28);
-      outline-offset: 2px;
+      transition: background-color 0.2s;
     }
     .btn-add {
       background-color: #10b981;
@@ -221,7 +212,6 @@
       cursor: pointer;
       font-size: 13px;
       user-select: none;
-      touch-action: manipulation;
     }
     
     .no-pdf {
@@ -235,85 +225,18 @@
       background: transparent !important;
       padding: 0 !important;
     }
-
-    @media (max-width: 600px) {
-      .app-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .app-header h1 {
-        font-size: 20px;
-        line-height: 1.2;
-      }
-
-      #badge-estado {
-        max-width: 100%;
-        line-height: 1.35;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 900px), (pointer: coarse) {
-      body {
-        padding: 12px;
-      }
-
-      .app-container {
-        padding: 20px;
-      }
-
-      #pdf-area {
-        padding: 12px;
-      }
-
-      .form-control {
-        min-height: 44px;
-        padding: 10px 12px;
-        font-size: 16px;
-      }
-
-      .item-cant,
-      .item-precio,
-      #porcentaje-iva {
-        min-width: 72px;
-        touch-action: manipulation;
-      }
-
-      td {
-        padding: 8px 6px;
-      }
-
-      .btn {
-        min-height: 44px;
-        padding: 10px 16px;
-        font-size: 14px;
-      }
-
-      .btn-add {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .btn-delete {
-        min-width: 44px;
-        min-height: 44px;
-        justify-content: center;
-        padding: 0;
-        font-size: 16px;
-      }
-
-      .tax-toggle {
-        min-height: 44px;
-      }
-
-      .tax-toggle input {
-        width: 22px;
-        height: 22px;
-      }
-    }
   </style>
+   <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    function actualizarCalculos() {
+      const inputs = document.querySelectorAll("input");
+      inputs.forEach(input => {
+        input.addEventListener("input", function() { this.value = this.value; });
+      });
+    }
+    actualizarCalculos();
+  });
+</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
@@ -397,15 +320,15 @@
         <tbody id="items-body">
           <tr>
             <td><input type="text" class="form-control item-desc" placeholder="Descripción del servicio o producto"></td>
-            <td><input type="number" class="form-control item-cant" value="1" min="1" step="any" inputmode="decimal" aria-label="Cantidad" style="text-align:center;"></td>
-            <td><input type="number" class="form-control item-precio" value="0" min="0" step="any" inputmode="decimal" aria-label="Precio unitario" style="text-align:right;"></td>
+            <td><input type="number" class="form-control item-cant" value="1" min="1" style="text-align:center;" oninput="calcularTotales()"></td>
+            <td><input type="number" class="form-control item-precio" value="0" min="0" style="text-align:right;" oninput="calcularTotales()"></td>
             <td style="text-align:right; font-weight:600;" class="item-subtotal">$0</td>
-            <td class="no-pdf"><button type="button" class="btn btn-delete" aria-label="Eliminar concepto">✕</button></td>
+            <td class="no-pdf"><button class="btn btn-delete" onclick="eliminarFila(this)">✕</button></td>
           </tr>
         </tbody>
       </table>
 
-      <button type="button" id="btn-agregar-concepto" class="btn btn-add no-pdf">+ Agregar Concepto</button>
+      <button class="btn btn-add no-pdf" onclick="agregarFila()">+ Agregar Concepto</button>
 
       <div class="summary-container">
         <div class="notes-area">
@@ -421,11 +344,11 @@
 
           <div class="total-row">
             <label class="tax-toggle">
-              <input type="checkbox" id="check-iva" checked>
+              <input type="checkbox" id="check-iva" checked onchange="calcularTotales()">
               <span>Incluir IVA:</span>
             </label>
             <div style="display:flex; align-items:center; gap:4px;">
-              <input type="number" id="porcentaje-iva" value="19" min="0" step="any" inputmode="decimal" aria-label="Porcentaje de IVA" style="width:45px; text-align:center;" class="form-control">
+              <input type="number" id="porcentaje-iva" value="19" style="width:45px; text-align:center;" class="form-control" oninput="calcularTotales()">
               <span>%</span>
             </div>
           </div>
@@ -462,46 +385,9 @@
         window.history.replaceState({}, document.title, window.location.pathname);
       }
 
-      inicializarEventosInteractivos();
       actualizarBadgeEstado();
       calcularTotales();
     });
-
-    function inicializarEventosInteractivos() {
-      const itemsBody = document.getElementById('items-body');
-      const botonAgregar = document.getElementById('btn-agregar-concepto');
-      const porcentajeIVA = document.getElementById('porcentaje-iva');
-      const checkIVA = document.getElementById('check-iva');
-      const eventosCalculo = ['input', 'change', 'keyup'];
-
-      eventosCalculo.forEach((nombreEvento) => {
-        itemsBody.addEventListener(nombreEvento, (event) => {
-          if (event.target.matches('.item-cant, .item-precio')) {
-            calcularTotales();
-          }
-        });
-
-        porcentajeIVA.addEventListener(nombreEvento, calcularTotales);
-      });
-
-      itemsBody.addEventListener('compositionend', (event) => {
-        if (event.target.matches('.item-cant, .item-precio')) {
-          calcularTotales();
-        }
-      });
-
-      porcentajeIVA.addEventListener('compositionend', calcularTotales);
-      checkIVA.addEventListener('input', calcularTotales);
-      checkIVA.addEventListener('change', calcularTotales);
-      botonAgregar.addEventListener('click', agregarFila);
-
-      itemsBody.addEventListener('click', (event) => {
-        const botonEliminar = event.target.closest('.btn-delete');
-        if (botonEliminar && itemsBody.contains(botonEliminar)) {
-          eliminarFila(botonEliminar);
-        }
-      });
-    }
 
     function actualizarBadgeEstado() {
       const esVIP = localStorage.getItem('cotiz_usuario_vip') === 'true';
@@ -536,19 +422,12 @@
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><input type="text" class="form-control item-desc" placeholder="Descripción del servicio o producto"></td>
-        <td><input type="number" class="form-control item-cant" value="1" min="1" step="any" inputmode="decimal" aria-label="Cantidad" style="text-align:center;"></td>
-        <td><input type="number" class="form-control item-precio" value="0" min="0" step="any" inputmode="decimal" aria-label="Precio unitario" style="text-align:right;"></td>
+        <td><input type="number" class="form-control item-cant" value="1" min="1" style="text-align:center;" oninput="calcularTotales()"></td>
+        <td><input type="number" class="form-control item-precio" value="0" min="0" style="text-align:right;" oninput="calcularTotales()"></td>
         <td style="text-align:right; font-weight:600;" class="item-subtotal">$0</td>
-        <td class="no-pdf"><button type="button" class="btn btn-delete" aria-label="Eliminar concepto">✕</button></td>
+        <td class="no-pdf"><button class="btn btn-delete" onclick="eliminarFila(this)">✕</button></td>
       `;
       tbody.appendChild(tr);
-      calcularTotales();
-
-      const descripcion = tr.querySelector('.item-desc');
-      requestAnimationFrame(() => {
-        tr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        descripcion.focus({ preventScroll: true });
-      });
     }
 
     function eliminarFila(btn) {
@@ -562,22 +441,23 @@
     }
 
     function calcularTotales() {
+      const cants = document.querySelectorAll('.item-cant');
+      const precios = document.querySelectorAll('.item-precio');
+      const subtotales = document.querySelectorAll('.item-subtotal');
+
       let acumuladoSubtotal = 0;
 
-      document.querySelectorAll('#items-body tr').forEach((fila) => {
-        const cantInput = fila.querySelector('.item-cant');
-        const precioInput = fila.querySelector('.item-precio');
-        const subtotal = fila.querySelector('.item-subtotal');
-        const cant = obtenerNumero(cantInput);
-        const precio = obtenerNumero(precioInput);
+      cants.forEach((cantInput, index) => {
+        const cant = parseFloat(cantInput.value) || 0;
+        const precio = parseFloat(precios[index].value) || 0;
         const sublinea = cant * precio;
-
-        subtotal.innerText = '$' + Math.round(sublinea).toLocaleString('es-CL');
+        
+        subtotales[index].innerText = '$' + sublinea.toLocaleString('es-CL');
         acumuladoSubtotal += sublinea;
       });
 
       const aplicaIVA = document.getElementById('check-iva').checked;
-      const pctIVA = obtenerNumero(document.getElementById('porcentaje-iva'));
+      const pctIVA = parseFloat(document.getElementById('porcentaje-iva').value) || 0;
       
       let montoIVA = 0;
       if (aplicaIVA) {
@@ -589,17 +469,6 @@
       document.getElementById('monto-subtotal').innerText = '$' + Math.round(acumuladoSubtotal).toLocaleString('es-CL');
       document.getElementById('monto-iva').innerText = '$' + Math.round(montoIVA).toLocaleString('es-CL');
       document.getElementById('monto-total').innerText = '$' + Math.round(totalFinal).toLocaleString('es-CL');
-    }
-
-    function obtenerNumero(input) {
-      if (!input) return 0;
-
-      const valorNumerico = input.valueAsNumber;
-      if (Number.isFinite(valorNumerico)) return valorNumerico;
-
-      const valorNormalizado = String(input.value).trim().replace(',', '.');
-      const valorAlternativo = Number.parseFloat(valorNormalizado);
-      return Number.isFinite(valorAlternativo) ? valorAlternativo : 0;
     }
 
     function descargarPDF() {
