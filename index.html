@@ -36,13 +36,13 @@
       font-size: 24px;
       color: #1a2a3a;
     }
-    
+   
     #pdf-area {
       background: #ffffff;
       padding: 20px;
       border-radius: 8px;
     }
-    
+   
     .invoice-header {
       display: flex;
       justify-content: space-between;
@@ -73,7 +73,7 @@
       font-size: 28px;
       letter-spacing: 1px;
     }
-    
+   
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -94,7 +94,7 @@
       color: #64748b;
       letter-spacing: 0.5px;
     }
-    
+   
     .form-group {
       margin-bottom: 10px;
     }
@@ -117,7 +117,7 @@
       outline: none;
       border-color: #2563eb;
     }
-    
+   
     table {
       width: 100%;
       border-collapse: collapse;
@@ -137,7 +137,7 @@
       padding: 8px 10px;
       border-bottom: 1px solid #e2e8f0;
     }
-    
+   
     .btn {
       padding: 9px 16px;
       border: none;
@@ -172,7 +172,7 @@
       margin-top: 20px;
     }
     .btn-pdf:hover { background-color: #1d4ed8; }
-    
+   
     .summary-container {
       display: flex;
       justify-content: space-between;
@@ -183,7 +183,7 @@
       width: 55%;
     }
     .totals-area {
-      width: 40%;
+      width: 42%;
       background: #f8fafc;
       padding: 15px;
       border-radius: 8px;
@@ -213,10 +213,11 @@
       font-size: 13px;
       user-select: none;
     }
-    
+   
     .no-pdf {
       display: block;
     }
+    
     .pdf-mode .no-pdf {
       display: none !important;
     }
@@ -224,19 +225,18 @@
       border: none !important;
       background: transparent !important;
       padding: 0 !important;
+      resize: none;
+    }
+    .pdf-mode .app-container {
+      box-shadow: none !important;
+      padding: 10px !important;
+      max-width: 100% !important;
+    }
+    .pdf-mode #pdf-area {
+      padding: 5px !important;
     }
   </style>
-   <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    function actualizarCalculos() {
-      const inputs = document.querySelectorAll("input");
-      inputs.forEach(input => {
-        input.addEventListener("input", function() { this.value = this.value; });
-      });
-    }
-    actualizarCalculos();
-  });
-</script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
@@ -248,7 +248,7 @@
     </div>
 
     <div id="pdf-area">
-      
+     
       <div class="invoice-header">
         <div class="logo-container">
           <img id="logo-preview" class="logo-preview" alt="Logo de la Empresa">
@@ -263,7 +263,7 @@
             <input type="text" class="form-control" placeholder="Email / Dirección" style="margin-top:4px;">
           </div>
         </div>
-        
+       
         <div class="meta-details">
           <h2>COTIZACIÓN</h2>
           <div class="form-group" style="display:flex; justify-content:flex-end; align-items:center; gap:8px;">
@@ -348,7 +348,7 @@
               <span>Incluir IVA:</span>
             </label>
             <div style="display:flex; align-items:center; gap:4px;">
-              <input type="number" id="porcentaje-iva" value="19" style="width:45px; text-align:center;" class="form-control" oninput="calcularTotales()">
+              <input type="number" id="porcentaje-iva" value="19" style="width:65px; text-align:center;" class="form-control" oninput="calcularTotales()">
               <span>%</span>
             </div>
           </div>
@@ -377,7 +377,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       const hoy = new Date().toISOString().split('T')[0];
       document.getElementById('fecha-cotizacion').value = hoy;
-      
+     
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('pago') === 'exitoso') {
         localStorage.setItem('cotiz_usuario_vip', 'true');
@@ -451,14 +451,14 @@
         const cant = parseFloat(cantInput.value) || 0;
         const precio = parseFloat(precios[index].value) || 0;
         const sublinea = cant * precio;
-        
+       
         subtotales[index].innerText = '$' + sublinea.toLocaleString('es-CL');
         acumuladoSubtotal += sublinea;
       });
 
       const aplicaIVA = document.getElementById('check-iva').checked;
       const pctIVA = parseFloat(document.getElementById('porcentaje-iva').value) || 19;
-      
+     
       let montoIVA = 0;
       if (aplicaIVA) {
         montoIVA = acumuladoSubtotal * (pctIVA / 100);
@@ -484,12 +484,12 @@
 
       const pdfArea = document.getElementById('pdf-area');
       const cliente = document.getElementById('cliente-nombre').value.trim() || 'Cliente';
-      
+     
       const opciones = {
-        margin: [10, 10, 10, 10],
+        margin: [5, 5, 5, 5], 
         filename: `Cotizacion_${cliente.replace(/\s+/g, '_')}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
@@ -497,7 +497,7 @@
 
       html2pdf().set(opciones).from(pdfArea).save().then(() => {
         document.body.classList.remove('pdf-mode');
-        
+       
         if (!usuarioEsVIP) {
           descargasUsadas++;
           localStorage.setItem('cotiz_descargas_usadas', descargasUsadas);
