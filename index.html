@@ -122,6 +122,11 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 15px;
+      page-break-inside: auto;
+    }
+    tr {
+      page-break-inside: avoid;
+      page-break-after: auto;
     }
     th {
       background-color: #1e293b;
@@ -178,6 +183,7 @@
       justify-content: space-between;
       align-items: flex-start;
       margin-top: 20px;
+      page-break-inside: avoid;
     }
     .notes-area {
       width: 55%;
@@ -222,18 +228,21 @@
       display: none !important;
     }
     .pdf-mode input, .pdf-mode textarea {
-      border: none !important;
-      background: transparent !important;
-      padding: 0 !important;
-      resize: none;
+      display: none !important;
+    }
+    .pdf-text-render {
+      display: block;
+      font-size: 13px;
+      color: #1e293b;
+      word-break: break-word;
     }
     .pdf-mode .app-container {
       box-shadow: none !important;
-      padding: 10px !important;
+      padding: 0 !important;
       max-width: 100% !important;
     }
     .pdf-mode #pdf-area {
-      padding: 5px !important;
+      padding: 10px !important;
     }
   </style>
 
@@ -349,7 +358,7 @@
             </label>
             <div style="display:flex; align-items:center; gap:4px;">
               <input type="number" id="porcentaje-iva" value="19" style="width:65px; text-align:center;" class="form-control" oninput="calcularTotales()">
-              <span>%</span>
+              <span class="no-pdf">%</span>
             </div>
           </div>
 
@@ -452,7 +461,7 @@
         const precio = parseFloat(precios[index].value) || 0;
         const sublinea = cant * precio;
        
-        subtotales[index].innerText = '$' + sublinea.toLocaleString('es-CL');
+        subtotales[index].innerText = '$' + Math.round(sublinea).toLocaleString('es-CL');
         acumuladoSubtotal += sublinea;
       });
 
@@ -482,21 +491,45 @@
         return;
       }
 
+      window.scrollTo(0, 0);
+      document.body.classList.add('pdf-mode');
+
+      // Convertir inputs a spans temporales para renderizado perfecto en el PDF
+      const inputs = document.querySelectorAll('#pdf-area input, #pdf-area textarea');
+      const temporales = [];
+
+      inputs.forEach(input => {
+        if (input.type === 'checkbox' || input.type === 'file' || input.classList.contains('no-pdf')) return;
+        
+        const span = document.createElement('span');
+        span.className = 'pdf-text-render';
+        span.innerText = input.value ? input.value : '';
+        
+        if (input.style.textAlign) {
+          span.style.textAlign = input.style.textAlign;
+        }
+        
+        input.parentNode.insertBefore(span, input);
+        temporales.push(span);
+      });
+
       const pdfArea = document.getElementById('pdf-area');
-      const cliente = document.getElementById('cliente-nombre').value.trim() || 'Cliente';
+      const clienteInput = document.getElementById('cliente-nombre');
+      const cliente = clienteInput && clienteInput.value.trim() ? clienteInput.value.trim() : 'Cliente';
      
       const opciones = {
-        margin: [5, 5, 5, 5], 
+        margin: [8, 8, 8, 8], 
         filename: `Cotizacion_${cliente.replace(/\s+/g, '_')}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      document.body.classList.add('pdf-mode');
-
       html2pdf().set(opciones).from(pdfArea).save().then(() => {
         document.body.classList.remove('pdf-mode');
+        
+        // Limpiar los elementos de texto temporales
+        temporales.forEach(span => span.remove());
        
         if (!usuarioEsVIP) {
           descargasUsadas++;
@@ -508,3 +541,5 @@
   </script>
 </body>
 </html>
+
+
