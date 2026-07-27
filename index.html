@@ -12,16 +12,20 @@
     body {
       background-color: #f0f2f5;
       margin: 0;
-      padding: 20px;
+      padding: 10px;
       color: #333;
     }
     .app-container {
       max-width: 850px;
       margin: auto;
       background: #ffffff;
-      padding: 30px;
+      padding: 15px;
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    @media (min-width: 768px) {
+      body { padding: 20px; }
+      .app-container { padding: 30px; }
     }
     .app-header {
       display: flex;
@@ -30,28 +34,45 @@
       border-bottom: 2px solid #eef2f5;
       padding-bottom: 15px;
       margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .app-header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 22px;
       color: #1a2a3a;
+    }
+    @media (min-width: 768px) {
+      .app-header h1 { font-size: 24px; }
     }
    
     #pdf-area {
       background: #ffffff;
-      padding: 20px;
+      padding: 10px;
       border-radius: 8px;
+    }
+    @media (min-width: 768px) {
+      #pdf-area { padding: 20px; }
     }
    
     .invoice-header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 25px;
+      flex-direction: column;
       gap: 20px;
+      margin-bottom: 25px;
+    }
+    @media (min-width: 768px) {
+      .invoice-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
     }
     .logo-container {
-      width: 45%;
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .logo-container { width: 45%; }
     }
     .logo-preview {
       max-width: 180px;
@@ -64,21 +85,36 @@
       margin-top: 10px;
     }
     .meta-details {
-      width: 50%;
-      text-align: right;
+      width: 100%;
+      text-align: left;
+    }
+    @media (min-width: 768px) {
+      .meta-details {
+        width: 50%;
+        text-align: right;
+      }
     }
     .meta-details h2 {
       margin: 0 0 10px 0;
       color: #2c3e50;
-      font-size: 28px;
+      font-size: 24px;
       letter-spacing: 1px;
+    }
+    @media (min-width: 768px) {
+      .meta-details h2 { font-size: 28px; }
     }
    
     .grid-2 {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: 1fr;
+      gap: 15px;
       margin-bottom: 25px;
+    }
+    @media (min-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
     }
     .card-info {
       background: #f8fafc;
@@ -118,11 +154,16 @@
       border-color: #2563eb;
     }
    
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 15px;
       page-break-inside: auto;
+      min-width: 500px;
     }
     tr {
       page-break-inside: avoid;
@@ -180,20 +221,33 @@
    
     .summary-container {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 20px;
       align-items: flex-start;
       margin-top: 20px;
       page-break-inside: avoid;
     }
+    @media (min-width: 768px) {
+      .summary-container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
     .notes-area {
-      width: 55%;
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .notes-area { width: 55%; }
     }
     .totals-area {
-      width: 42%;
+      width: 100%;
       background: #f8fafc;
       padding: 15px;
       border-radius: 8px;
       border: 1px solid #e2e8f0;
+    }
+    @media (min-width: 768px) {
+      .totals-area { width: 42%; }
     }
     .total-row {
       display: flex;
@@ -223,7 +277,7 @@
     .no-pdf {
       display: block;
     }
-    
+   
     .pdf-mode .no-pdf {
       display: none !important;
     }
@@ -242,7 +296,45 @@
       max-width: 100% !important;
     }
     .pdf-mode #pdf-area {
+      padding: 5px !important;
+    }
+    .pdf-mode .grid-2 {
+      margin-bottom: 15px !important;
+      gap: 10px !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+    }
+    .pdf-mode .card-info {
       padding: 10px !important;
+    }
+    .pdf-mode .invoice-header {
+      margin-bottom: 15px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: space-between !important;
+    }
+    .pdf-mode .logo-container {
+      width: 45% !important;
+    }
+    .pdf-mode .meta-details {
+      width: 50% !important;
+      text-align: right !important;
+    }
+    .pdf-mode table {
+      margin-bottom: 10px !important;
+      min-width: 100% !important;
+    }
+    .pdf-mode .summary-container {
+      margin-top: 10px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: space-between !important;
+    }
+    .pdf-mode .notes-area {
+      width: 55% !important;
+    }
+    .pdf-mode .totals-area {
+      width: 42% !important;
     }
   </style>
 
@@ -316,26 +408,28 @@
         </div>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 45%;">Descripción / Concepto</th>
-            <th style="width: 15%; text-align: center;">Cant.</th>
-            <th style="width: 20%; text-align: right;">Precio Unit. ($)</th>
-            <th style="width: 20%; text-align: right;">Total ($)</th>
-            <th class="no-pdf" style="width: 40px;"></th>
-          </tr>
-        </thead>
-        <tbody id="items-body">
-          <tr>
-            <td><input type="text" class="form-control item-desc" placeholder="Descripción del servicio o producto"></td>
-            <td><input type="number" class="form-control item-cant" value="1" min="1" style="text-align:center;" oninput="calcularTotales()"></td>
-            <td><input type="number" class="form-control item-precio" value="0" min="0" style="text-align:right;" oninput="calcularTotales()"></td>
-            <td style="text-align:right; font-weight:600;" class="item-subtotal">$0</td>
-            <td class="no-pdf"><button class="btn btn-delete" onclick="eliminarFila(this)">✕</button></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 45%;">Descripción / Concepto</th>
+              <th style="width: 15%; text-align: center;">Cant.</th>
+              <th style="width: 20%; text-align: right;">Precio Unit. ($)</th>
+              <th style="width: 20%; text-align: right;">Total ($)</th>
+              <th class="no-pdf" style="width: 40px;"></th>
+            </tr>
+          </thead>
+          <tbody id="items-body">
+            <tr>
+              <td><input type="text" class="form-control item-desc" placeholder="Descripción del servicio o producto"></td>
+              <td><input type="number" class="form-control item-cant" value="1" min="1" style="text-align:center;" oninput="calcularTotales()"></td>
+              <td><input type="number" class="form-control item-precio" value="0" min="0" style="text-align:right;" oninput="calcularTotales()"></td>
+              <td style="text-align:right; font-weight:600;" class="item-subtotal">$0</td>
+              <td class="no-pdf"><button class="btn btn-delete" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <button class="btn btn-add no-pdf" onclick="agregarFila()">+ Agregar Concepto</button>
 
@@ -500,15 +594,15 @@
 
       inputs.forEach(input => {
         if (input.type === 'checkbox' || input.type === 'file' || input.classList.contains('no-pdf')) return;
-        
+       
         const span = document.createElement('span');
         span.className = 'pdf-text-render';
         span.innerText = input.value ? input.value : '';
-        
+       
         if (input.style.textAlign) {
           span.style.textAlign = input.style.textAlign;
         }
-        
+       
         input.parentNode.insertBefore(span, input);
         temporales.push(span);
       });
@@ -518,7 +612,7 @@
       const cliente = clienteInput && clienteInput.value.trim() ? clienteInput.value.trim() : 'Cliente';
      
       const opciones = {
-        margin: [8, 8, 8, 8], 
+        margin: [5, 5, 5, 5],
         filename: `Cotizacion_${cliente.replace(/\s+/g, '_')}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true, logging: false },
@@ -527,7 +621,7 @@
 
       html2pdf().set(opciones).from(pdfArea).save().then(() => {
         document.body.classList.remove('pdf-mode');
-        
+       
         // Limpiar los elementos de texto temporales
         temporales.forEach(span => span.remove());
        
