@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,8 +36,8 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 2px solid #eef2f5;
-      padding-bottom: 15px;
-      margin-bottom: 20px;
+      padding-bottom: 12px;
+      margin-bottom: 15px;
       flex-wrap: wrap;
       gap: 10px;
     }
@@ -43,24 +46,18 @@
       font-size: 22px;
       color: #1a2a3a;
     }
-    @media (min-width: 768px) {
-      .app-header h1 { font-size: 24px; }
-    }
    
     #pdf-area {
       background: #ffffff;
-      padding: 5px;
+      padding: 0;
       border-radius: 8px;
-    }
-    @media (min-width: 768px) {
-      #pdf-area { padding: 10px; }
     }
    
     .invoice-header {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-bottom: 15px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
     @media (min-width: 768px) {
       .invoice-header {
@@ -76,14 +73,14 @@
       .logo-container { width: 45%; }
     }
     .logo-preview {
-      max-width: 150px;
-      max-height: 80px;
+      max-width: 140px;
+      max-height: 70px;
       object-fit: contain;
       display: none;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
     .company-details {
-      margin-top: 5px;
+      margin-top: 3px;
     }
     .meta-details {
       width: 100%;
@@ -96,44 +93,41 @@
       }
     }
     .meta-details h2 {
-      margin: 0 0 8px 0;
+      margin: 0 0 5px 0;
       color: #2c3e50;
-      font-size: 24px;
+      font-size: 22px;
       letter-spacing: 1px;
-    }
-    @media (min-width: 768px) {
-      .meta-details h2 { font-size: 26px; }
     }
    
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
     @media (min-width: 768px) {
       .grid-2 {
         grid-template-columns: 1fr 1fr;
-        gap: 15px;
+        gap: 12px;
       }
     }
     .card-info {
       background: #f8fafc;
-      padding: 10px 12px;
-      border-radius: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
       border: 1px solid #e2e8f0;
     }
     .card-info h3 {
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 13px;
+      margin-bottom: 6px;
+      font-size: 12px;
       text-transform: uppercase;
       color: #64748b;
       letter-spacing: 0.5px;
     }
    
     .form-group {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .form-group label {
       display: block;
@@ -144,11 +138,10 @@
     }
     .form-control {
       width: 100%;
-      padding: 6px 8px;
+      padding: 5px 7px;
       border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      font-size: 12px;
-      transition: border-color 0.2s;
+      border-radius: 4px;
+      font-size: 11px;
     }
     .form-control:focus {
       outline: none;
@@ -163,30 +156,25 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 10px;
-      page-break-inside: auto;
       min-width: 500px;
-    }
-    tr {
-      page-break-inside: avoid;
-      page-break-after: auto;
     }
     th {
       background-color: #1e293b;
       color: #ffffff;
-      padding: 8px 10px;
-      font-size: 12px;
+      padding: 6px 8px;
+      font-size: 11px;
       text-align: left;
       font-weight: 600;
     }
-    th:first-child { border-top-left-radius: 6px; }
-    th:last-child { border-top-right-radius: 6px; }
+    th:first-child { border-top-left-radius: 4px; }
+    th:last-child { border-top-right-radius: 4px; }
     td {
-      padding: 6px 8px;
+      padding: 5px 8px;
       border-bottom: 1px solid #e2e8f0;
     }
    
     .btn {
-      padding: 8px 14px;
+      padding: 7px 12px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -195,7 +183,6 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: background-color 0.2s;
     }
     .btn-add {
       background-color: #10b981;
@@ -206,10 +193,9 @@
     .btn-delete {
       background-color: #ef4444;
       color: white;
-      padding: 4px 6px;
+      padding: 3px 5px;
       font-size: 10px;
     }
-    .btn-delete:hover { background-color: #dc2626; }
     .btn-pdf {
       background-color: #2563eb;
       color: white;
@@ -224,10 +210,9 @@
     .summary-container {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 10px;
       align-items: flex-start;
-      margin-top: 10px;
-      page-break-inside: avoid;
+      margin-top: 8px;
     }
     @media (min-width: 768px) {
       .summary-container {
@@ -244,8 +229,8 @@
     .totals-area {
       width: 100%;
       background: #f8fafc;
-      padding: 10px 12px;
-      border-radius: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
       border: 1px solid #e2e8f0;
     }
     @media (min-width: 768px) {
@@ -255,40 +240,35 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 4px 0;
-      font-size: 13px;
+      padding: 3px 0;
+      font-size: 12px;
       color: #334155;
     }
     .total-row.final {
       border-top: 2px solid #cbd5e1;
-      margin-top: 6px;
-      padding-top: 8px;
-      font-size: 16px;
+      margin-top: 4px;
+      padding-top: 6px;
+      font-size: 15px;
       font-weight: bold;
       color: #0f172a;
     }
     .tax-toggle {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 11px;
       user-select: none;
     }
    
-    .no-pdf {
-      display: block;
-    }
-   
-    .pdf-mode .no-pdf {
-      display: none !important;
-    }
-    .pdf-mode input, .pdf-mode textarea {
-      display: none !important;
-    }
+    .no-pdf { display: block; }
+
+    /* ESTRICTO PARA MODO PDF: FUERZA 1 SOLA PÁGINA */
+    .pdf-mode .no-pdf { display: none !important; }
+    .pdf-mode input, .pdf-mode textarea { display: none !important; }
     .pdf-text-render {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       color: #1e293b;
       word-break: break-word;
     }
@@ -296,49 +276,45 @@
       box-shadow: none !important;
       padding: 0 !important;
       max-width: 100% !important;
+      width: 100% !important;
     }
     .pdf-mode #pdf-area {
       padding: 0 !important;
+      max-height: 275mm;
+      overflow: hidden;
     }
     .pdf-mode .grid-2 {
-      margin-bottom: 10px !important;
-      gap: 10px !important;
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
+      margin-bottom: 8px !important;
+      gap: 8px !important;
     }
     .pdf-mode .card-info {
-      padding: 8px 10px !important;
+      padding: 6px 8px !important;
     }
     .pdf-mode .invoice-header {
-      margin-bottom: 10px !important;
+      margin-bottom: 8px !important;
       display: flex !important;
       flex-direction: row !important;
       justify-content: space-between !important;
     }
-    .pdf-mode .logo-container {
-      width: 45% !important;
-    }
-    .pdf-mode .meta-details {
-      width: 50% !important;
-      text-align: right !important;
-    }
+    .pdf-mode .logo-container { width: 45% !important; }
+    .pdf-mode .meta-details { width: 50% !important; text-align: right !important; }
     .pdf-mode table {
-      margin-bottom: 8px !important;
+      margin-bottom: 6px !important;
       min-width: 100% !important;
     }
+    .pdf-mode th, .pdf-mode td {
+      padding: 4px 6px !important;
+    }
     .pdf-mode .summary-container {
-      margin-top: 8px !important;
+      margin-top: 6px !important;
       display: flex !important;
       flex-direction: row !important;
       justify-content: space-between !important;
     }
-    .pdf-mode .notes-area {
-      width: 55% !important;
-    }
-    .pdf-mode .totals-area {
-      width: 42% !important;
-      padding: 8px 10px !important;
-    }
+    .pdf-mode .notes-area { width: 55% !important; }
+    .pdf-mode .totals-area { width: 42% !important; padding: 6px 8px !important; }
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -356,27 +332,27 @@
       <div class="invoice-header">
         <div class="logo-container">
           <img id="logo-preview" class="logo-preview" alt="Logo de la Empresa">
-          <div class="upload-btn-wrapper no-pdf" style="margin-bottom: 8px;">
+          <div class="upload-btn-wrapper no-pdf" style="margin-bottom: 6px;">
             <label for="logo-input" class="btn" style="background:#e2e8f0; color:#334155;">📷 Cargar Logo</label>
             <input type="file" id="logo-input" accept="image/*" style="display:none;" onchange="cargarLogo(event)">
           </div>
           <div class="company-details">
-            <input type="text" class="form-control" placeholder="Nombre de tu Empresa / Tu Nombre" style="font-weight: bold; font-size: 14px;">
-            <input type="text" class="form-control" placeholder="RUT / NIF / Tax ID" style="margin-top:3px;">
-            <input type="tel" class="form-control" placeholder="Teléfono del Prestador / Empresa" style="margin-top:3px;">
-            <input type="text" class="form-control" placeholder="Email / Dirección" style="margin-top:3px;">
+            <input type="text" class="form-control" placeholder="Nombre de tu Empresa / Tu Nombre" style="font-weight: bold; font-size: 13px;">
+            <input type="text" class="form-control" placeholder="RUT / NIF / Tax ID" style="margin-top:2px;">
+            <input type="tel" class="form-control" placeholder="Teléfono del Prestador / Empresa" style="margin-top:2px;">
+            <input type="text" class="form-control" placeholder="Email / Dirección" style="margin-top:2px;">
           </div>
         </div>
        
         <div class="meta-details">
           <h2>COTIZACIÓN</h2>
-          <div class="form-group" style="display:flex; justify-content:flex-end; align-items:center; gap:8px;">
+          <div class="form-group" style="display:flex; justify-content:flex-end; align-items:center; gap:6px;">
             <label style="margin:0;">N° Cotización:</label>
-            <input type="text" class="form-control" value="0001" style="width: 90px; text-align:right;">
+            <input type="text" class="form-control" value="0001" style="width: 80px; text-align:right;">
           </div>
-          <div class="form-group" style="display:flex; justify-content:flex-end; align-items:center; gap:8px;">
+          <div class="form-group" style="display:flex; justify-content:flex-end; align-items:center; gap:6px;">
             <label style="margin:0;">Fecha:</label>
-            <input type="date" id="fecha-cotizacion" class="form-control" style="width: 130px; text-align:right;">
+            <input type="date" id="fecha-cotizacion" class="form-control" style="width: 120px; text-align:right;">
           </div>
         </div>
       </div>
@@ -388,7 +364,7 @@
             <input type="text" id="cliente-nombre" class="form-control" placeholder="Nombre del cliente o Empresa">
           </div>
           <div class="form-group">
-            <input type="tel" class="form-control" placeholder="Teléfono de contacto (Ej: +56 9...)">
+            <input type="tel" class="form-control" placeholder="Teléfono de contacto">
           </div>
           <div class="form-group">
             <input type="text" class="form-control" placeholder="RUT / Identificación fiscal">
@@ -419,7 +395,7 @@
               <th style="width: 15%; text-align: center;">Cant.</th>
               <th style="width: 20%; text-align: right;">Precio Unit. ($)</th>
               <th style="width: 20%; text-align: right;">Total ($)</th>
-              <th class="no-pdf" style="width: 35px;"></th>
+              <th class="no-pdf" style="width: 30px;"></th>
             </tr>
           </thead>
           <tbody id="items-body">
@@ -439,7 +415,7 @@
       <div class="summary-container">
         <div class="notes-area">
           <label style="font-size:11px; font-weight:600; color:#475569;">Notas o Términos Adicionales:</label>
-          <textarea class="form-control" rows="3" style="margin-top:3px;" placeholder="Ej: Precios sujetos a variación si cambian las especificaciones. Garantía de 3 meses."></textarea>
+          <textarea class="form-control" rows="2" style="margin-top:2px;" placeholder="Ej: Garantía de 3 meses."></textarea>
         </div>
 
         <div class="totals-area">
@@ -454,7 +430,7 @@
               <span>Incluir IVA:</span>
             </label>
             <div style="display:flex; align-items:center; gap:4px;">
-              <input type="number" id="porcentaje-iva" value="19" style="width:55px; text-align:center;" class="form-control" oninput="calcularTotales()">
+              <input type="number" id="porcentaje-iva" value="19" style="width:50px; text-align:center;" class="form-control" oninput="calcularTotales()">
               <span class="no-pdf">%</span>
             </div>
           </div>
@@ -614,7 +590,7 @@
       const cliente = clienteInput && clienteInput.value.trim() ? clienteInput.value.trim() : 'Cliente';
      
       const opciones = {
-        margin: [3, 3, 3, 3],
+        margin: [2, 2, 2, 2],
         filename: `Cotizacion_${cliente.replace(/\s+/g, '_')}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true, logging: false },
@@ -636,5 +612,3 @@
   </script>
 </body>
 </html>
-
-
